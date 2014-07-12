@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Attach the loop device for copying
+# initial boot environment
+boot="bochs/boot"
+img="ibe.img"
+
+if [ "$1" != "" ]; then
+	img="$1"
+fi
+
+if [ "$2" != "" ]; then
+	boot="$2"
+fi
+
+echo "Setting up loop device on /dev/loop0"
+echo "from $boot/$img"
+sudo losetup /dev/loop0 $boot/$img

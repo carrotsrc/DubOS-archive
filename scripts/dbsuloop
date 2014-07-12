@@ -1,0 +1,5 @@
+#!/bin/bash
+# Detach the loop device
+echo "Detaching loop device"
+sudo losetup -d /dev/loop0
+echo "Done"

@@ -1,0 +1,3 @@
+#!/bin/bash
+# Create a blank floppy image
+dd if=/dev/zero of=$1.img count=1440 bs=1k

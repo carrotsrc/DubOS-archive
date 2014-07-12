@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Unmounting /mnt/user/vfs"
+sudo umount /mnt/user/vfs
+echo "Detaching loop device"
+sudo losetup -d /dev/loop1
+echo "Done"

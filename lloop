@@ -1,0 +1,10 @@
+#!/bin/bash
+boot="bochs/boot"
+img="floppy.img"
+
+echo "Setting up loop device on /dev/loop1"
+echo "from $boot/$img"
+sudo losetup /dev/loop1 $boot/$img
+echo "Mounting device"
+sudo mount -o loop /dev/loop1 /mnt/user/vfs
+echo "Done"

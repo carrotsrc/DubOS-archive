@@ -1,0 +1,11 @@
+#!/bin/bash
+OF="/dev/loop0"
+
+if [ "$1" != "" ]; then
+	OF="/dev/$1"
+fi
+
+# dd the initial boot environment
+echo "Copying EBE to $OF"
+sudo dd if=bin/dbebe.bin of=$OF oflag=seek_bytes seek=512 bs=512
+echo "Done"

@@ -1,0 +1,16 @@
+#!/bin/bash
+OF="/dev/sdb"
+IF="bochs/boot/ibe.img"
+
+if [ "$1" != "" ]; then
+	OF="/dev/$1"
+fi
+
+if [ "$2" != "" ]; then
+	IF="bochs/boot/$2"
+fi
+
+# dd the initial boot environment
+echo "Copying $IF to $OF" 
+sudo dd if=$IF of=$OF bs=512
+echo "Done"

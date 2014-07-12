@@ -1,0 +1,11 @@
+#!/bin/bash
+OF="/dev/loop0"
+
+if [ "$1" != "" ]; then
+	OF="/dev/$1"
+fi
+
+# dd the initial boot environment
+echo "Copying IBE to $OF" 
+sudo dd if=bin/dbsec.bin of=$OF bs=512
+echo "Done"

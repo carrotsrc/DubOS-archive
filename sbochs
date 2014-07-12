@@ -1,0 +1,16 @@
+#!/bin/bash
+log="bochs/log"
+boot="bochs/boot"
+vmc="bvm"
+echo "Using bochs configuration $boot/$vmc"
+if [ "$1" == "" ]; then
+
+	echo "No initial debug console"
+
+	bochs -qf $boot/bvm -log $log/current -rc bochs/debug/nodebug.brc
+	exit 0
+else
+	echo "Loading debug resource $1..."
+	bochs -qf $boot/bvm -log $log/current -rc bochs/debug/"$1".brc
+	exit 0
+fi
