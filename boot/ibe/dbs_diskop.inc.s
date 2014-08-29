@@ -36,7 +36,7 @@ dbs_geo_flp:
 _dbs_g_l:
 	push	%bp
 	mov	%sp, %bp
-	movb	0x4(%bp), %dl
+	movb	0x8(%bp), %dl
 
 	xorw	%ax, %ax	# int13 00
 	int	$0x13		# reset drive

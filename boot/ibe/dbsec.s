@@ -57,11 +57,6 @@ _preboot:
 
 	#.include "dbs_gdt.inc.s"		# gdt descriptors - don't need this yet
 __RELOCATE_MARKER:
-	nop
-	nop
-	mov $0x44, %bx
-	nop
-	nop
 	jmp _post_relocate
 
 	.include "dbs_ibe.inc.s"		# dbs initial boot environment - need this

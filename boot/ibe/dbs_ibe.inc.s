@@ -96,7 +96,8 @@ _ibe_reloc_l:
 	jl	_ibe_reloc_l
 
 	xor	%di, %di
-	jmp	$0x0000, $0x0600
+	jmp	$0x0000, $0x0600 # far jump to new location
+
 __dbs_xpos:
 	.word 0
 
