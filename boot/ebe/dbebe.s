@@ -17,32 +17,33 @@
 ebemsg:
 	.asciz "Extended Boot Environment"
 
-dbs_sw_pmode:
-.code16
-	xorw	%ax, %ax
-	movw	%ax, %ds
-	cli
+#dbs_sw_pmode:
+#.code16
+#	xorw	%ax, %ax
+#	movw	%ax, %ds
+#	cli
 
-	DATA32 ADDR32	lgdt	dbs_gdt
+#	DATA32 ADDR32	lgdt	dbs_gdt
 
-	mov	%cr0, %eax
-	or	$1, %al
-	mov	%eax, %cr0
+#	mov	%cr0, %eax
+#	or	$1, %al
+#	mov	%eax, %cr0
 
-	DATA32	ljmp	$0x08, $_start_pmode
+#	DATA32	ljmp	$0x08, $_start_pmode
 
 # Here we reload all the segements with
 # the descriptors
-_start_pmode:
-.code32
-	movw	$0x10, %ax	# set as data descriptor
-	movw	%ax, %ds
-	movw	%ax, %es
-	movw	%ax, %fs
-	movw	%ax, %gs
-	movw	%ax, %ss
 
-	mov	$msg_pmtitle, %esi
+#_start_pmode:
+#.code32
+#	movw	$0x10, %ax	# set as data descriptor
+#	movw	%ax, %ds
+#	movw	%ax, %es
+#	movw	%ax, %fs
+#	movw	%ax, %gs
+#	movw	%ax, %ss
+
+#	mov	$msg_pmtitle, %esi
 	#call	pbe_print
-	jmp	.
+#	jmp	.
 
