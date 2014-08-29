@@ -79,6 +79,22 @@ _ibe_pr_u8:
 
 	ret
 
+# we need to relocate the boot code for chainloading
+ibe_reloc:
+	mov	$0x060, %ax
+	mov	%ax, %es	# set far ptr to 0x0600
+	mov	$__RELOCATE_MARKER, %si
+	xor	%ax, %ax
+	mov	%ax, %di
+
+_ibe_reloc_l:
+	mov	(%si), %al
+	stosb
+	inc	%si
+	cmp	$__RELOCATE_END_MARKER, %si
+	jl	_ibe_reloc_l
+
+	jmp	$0x0000, $0x0600
 __dbs_xpos:
 	.word 0
 

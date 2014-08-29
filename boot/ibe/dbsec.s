@@ -53,20 +53,33 @@ _start:
 _preboot:
 	jmp _boot
 
-	.include "dbs_gdt.inc.s"		# gdt descriptors
-	.include "dbs_ibe.inc.s"		# dbs initial boot environment
+	# ideally we want all this located at 0x0600
+
+	#.include "dbs_gdt.inc.s"		# gdt descriptors - don't need this yet
+__RELOCATE_MARKER:
+	nop
+	nop
+	mov $0x44, %bx
+	nop
+	nop
+	jmp _post_relocate
+
+	.include "dbs_ibe.inc.s"		# dbs initial boot environment - need this
 	.include "dbs_diskop.inc.s"		# dbs disk operator
 _boot:
 	# ~1.5kb stack
 	mov	$0x2000, %sp	# set the stack pointer
 	mov	$0x2000, %bp	# set the stack base
 	xor	%ax, %ax
-	mov	%ax, %ss
+	mov	%ax, %ss	# move 0 into stack segment
 	push	%dx		# push the boot drive
-	mov	%ax, %ds
+	mov	%ax, %ds	# mov 0 into data segment
+	call	ibe_reloc
+
+_post_relocate:
 
 	mov	$0xb800, %ax	# vbuf
-	mov	%ax, %es	# set the far jump to vbuf
+	mov	%ax, %es	# set the far ptr to vbuf
 	call	ibe_cls		# clear screen
 
 	mov	$msg_title, %si
@@ -85,12 +98,12 @@ _boot:
 
 	jmp	.
 
-# Switch to protected mode
-
 msg_title:
 	.asciz	"DubOS"
 msg_title2:
 	.asciz	"Initial Boot Environment"
+
+__RELOCATE_END_MARKER:
 
 	.org	.+(510-.), 0x0
 	.word	0xAA55
