@@ -29,6 +29,7 @@ _ibe_clsl:
 	cmp	%bx, %si
 	jne	_ibe_clsl
 
+	xor	%di, %di
 	ret
 
 # print character array and add cr
@@ -94,6 +95,7 @@ _ibe_reloc_l:
 	cmp	$__RELOCATE_END_MARKER, %si
 	jl	_ibe_reloc_l
 
+	xor	%di, %di
 	jmp	$0x0000, $0x0600
 __dbs_xpos:
 	.word 0
