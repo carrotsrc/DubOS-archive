@@ -25,6 +25,7 @@ floppy_geo:
 __flp_buf:
 	.word 0x7F00		# buffer address
 
+__flp_emsg0:
 __flp_emsg1:
 	.asciz "Error reading from drive"
 
