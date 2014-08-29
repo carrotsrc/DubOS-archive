@@ -25,20 +25,21 @@ _start:
 	jmp _preboot
 	nop
 	## BPB ##
-
+	
+	# This is for a FAT12 partition
 	.ascii	"MSDOS5.0"
-	.word	512
-	.byte	1
-	.word	1
-	.byte	2
-	.word	224
-	.word	2880
-	.byte	240
-	.word	9
-	.word	18
-	.word	2
-	.long	0
-	.long	0
+	.word	512		# Bytes/Sector
+	.byte	1		# Sectors/Cluster
+	.word	1		# Number of reserved sectors
+	.byte	2		# number of FAT compies
+	.word	224		# number of root dir entries
+	.word	2880		# total number of sectors
+	.byte	240		# media descriptor type
+	.word	9		# sectors/FAT
+	.word	18		# sectors/track
+	.word	2		# number of heads
+	.long	0		# number of hidden sectors
+	.long	0		# what?
 
 	## EBR ##
 	.byte	0x0

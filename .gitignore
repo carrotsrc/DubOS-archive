@@ -1,3 +1,4 @@
 obj/*.*
 bin/*.*
 sub.bin
+bochs/log/*
