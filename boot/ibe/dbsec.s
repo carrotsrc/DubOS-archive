@@ -83,7 +83,7 @@ _post_relocate:
 	mov	$msg_title2, %si
 	call	ibe_println
 
-	call	dbs_geo_flp
+	call	dbs_lsec
 
 	add	$0x2, %sp
 	mov	$0xb800, %ax	# vbuf
