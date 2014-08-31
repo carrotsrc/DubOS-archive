@@ -1,6 +1,27 @@
-----------------
-Drive Parameters
-----------------
+------------------
+- Read Operation -
+------------------
+ah: 0x2
+dl: floppy (0x0-0x3) hard (0x80 - 0x81)
+
+ch: cylinder
+dh: head
+al: sectors
+
+bx: buffer address (es:bs)
+
+	sector written to address es:bx 
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+--------------------
+- Drive Parameters -
+--------------------
 ah: 0x8
 dl: floppy (0x0-0x3) hard (0x80 - 0x81) 
 
