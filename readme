@@ -14,7 +14,7 @@ Current Task
 
 MBR relocates itself to 0x0600, and loads up the second sector of the disk which has the EBE- this is close to being in a state for chainloading!
 
-Next stage is to scrap using floppy image and start using a properly partitioned disk, placing the second stage on the boot record of the active partition.
+Swapped everything over from floppy image to hard disk image. Next need to partition the hard disk image properly.
 
 Points of Interest
 ------------------
