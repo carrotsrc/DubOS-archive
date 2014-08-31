@@ -1,0 +1,14 @@
+----------------
+Drive Parameters
+----------------
+ah: 0x8
+dl: floppy (0x0-0x3) hard (0x80 - 0x81) 
+
+	ch: Total Cylinders
+	dh: Total Heads
+	cl: sectors/track
+
+	dl: Total Drives
+
+*notes
+	Can use the drive passed from BIOS
