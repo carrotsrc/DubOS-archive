@@ -1,6 +1,6 @@
 #!/bin/bash
 boot="bochs/boot"
-img="floppy.img"
+img="hdd.img"
 
 echo "Setting up loop device on /dev/loop1"
 echo "from $boot/$img"

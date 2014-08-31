@@ -3,7 +3,7 @@
 # Attach the loop device for copying
 # initial boot environment
 boot="bochs/boot"
-img="ibe.img"
+img="hdd.img"
 
 if [ "$1" != "" ]; then
 	img="$1"

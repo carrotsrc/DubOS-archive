@@ -5,6 +5,9 @@ display_library: x
 memory: host=32, guest=32
 romimage: file="/usr/share/bochs/BIOS-bochs-latest"
 vgaromimage: file="/usr/share/bochs/VGABIOS-lgpl-latest"
-  1.44M 3.5" media:
-       floppya: 1_44=bochs/boot/ibe.img, status=inserted
-  boot: floppy
+#  1.44M 3.5" media:
+#       floppya: 1_44=bochs/boot/ibe.img, status=inserted
+#  boot: floppy
+
+ata0-master: type=disk, path="bochs/boot/hdd.img", cylinders=65, heads=16, spt=63
+  boot: disk
