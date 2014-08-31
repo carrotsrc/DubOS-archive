@@ -89,6 +89,7 @@ _post_relocate:
 	mov	$0xb800, %ax	# vbuf
 	mov	%ax, %es
 	mov	__flp_buf, %si	# should be loaded
+
 	call	ibe_println
 
 	jmp	.

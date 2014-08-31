@@ -30,13 +30,15 @@ __flp_emsg1:
 	.asciz "Error reading from drive"
 
 dbs_geo_flp:
+	
+	
 	xor	%esi, %esi
 	mov	$floppy_geo-1, %si	# load geos
 
 _dbs_g_l:
 	push	%bp
 	mov	%sp, %bp
-	movb	0x8(%bp), %dl
+	movb	0x6(%bp), %dl
 
 	xorw	%ax, %ax	# int13 00
 	int	$0x13		# reset drive
@@ -58,7 +60,6 @@ _dbs_g_l:
 
 	pop	%bp
 	ret
-
 
 # Error message routines
 _dbs_geo_flp_err0:
