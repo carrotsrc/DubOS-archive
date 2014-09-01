@@ -26,35 +26,10 @@ _start:
 	nop
 	## BPB ##
 	
-	# This is for a FAT12 partition
-	.ascii	"MSDOS5.0"
-	.word	512		# Bytes/Sector
-	.byte	1		# Sectors/Cluster
-	.word	1		# Number of reserved sectors
-	.byte	2		# number of FAT compies
-	.word	224		# number of root dir entries
-	.word	2880		# total number of sectors
-	.byte	240		# media descriptor type
-	.word	9		# sectors/FAT
-	.word	18		# sectors/track
-	.word	2		# number of heads
-	.long	0		# number of hidden sectors
-	.long	0		# what?
-
-	## EBR ##
-	.byte	0x0
-	.byte	0x0
-	.byte	41
-	.long	0x1D107
-	.ascii	"DubOS01    "
-	.ascii	"FAT12   "
-
-
 _preboot:
 	jmp _boot
 
-	# ideally we want all this located at 0x0600
-
+	# this is moved to 0x0600 when ibe_reloc is called
 	#.include "dbs_gdt.inc.s"		# gdt descriptors - don't need this yet
 __RELOCATE_MARKER:
 	jmp _post_relocate
@@ -72,7 +47,7 @@ _boot:
 	call	ibe_reloc
 
 _post_relocate:
-
+	call	ibe_read_ptable
 	mov	$0xb800, %ax	# vbuf
 	mov	%ax, %es	# set the far ptr to vbuf
 	call	ibe_cls		# clear screen
@@ -82,7 +57,7 @@ _post_relocate:
 
 	mov	$msg_title2, %si
 	call	ibe_println
-
+/*
 	call	dbs_lsec
 
 	add	$0x2, %sp
@@ -91,7 +66,7 @@ _post_relocate:
 	mov	__flp_buf, %si	# should be loaded
 
 	call	ibe_println
-
+*/
 	jmp	.
 
 msg_title:
@@ -101,6 +76,13 @@ msg_title2:
 
 __RELOCATE_END_MARKER:
 
-	.org	.+(510-.), 0x0
-	.word	0xAA55
+	# write up to the partition table
+	.org	.+(0x1b4-.), 0x0
+	.ascii	"[DUBOS-BS]" # disk marker
+
+	/* We're not building a partition table at the moment
+	*  so we assume that the boot signature is already
+	*  written to the end of the boot sector
+	*/
+	#.word	0xAA55
 
