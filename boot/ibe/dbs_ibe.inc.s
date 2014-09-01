@@ -98,6 +98,12 @@ _ibe_reloc_l:
 	xor	%di, %di
 	jmp	$0x0000, $0x0600 # far jump to new location
 
+ibe_read_ptable:
+	xor	%ax, %ax
+	mov	$0x7dbe, %si
+	movb	(%si), %al
+	ret
+
 __dbs_xpos:
 	.word 0
 
