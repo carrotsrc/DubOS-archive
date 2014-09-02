@@ -1,0 +1,45 @@
+Master Boot Record
+------------------
+Classic layout
+--------------
+
+0x000 - 0x1b3	- Bootstrap		436 bytes
+0x1b4 - 0x1bd	- Byte Disk ID		 10 bytes
+0x1be - 0x1cd	- Partition 1		 16 bytes
+0x1ce - 0x1dd	- Partition 2		 16 bytes		
+0x1de - 0x1ed	- Partition 3		 16 bytes
+0x1ee - 0x1fd	- Partition 4		 16 bytes
+0x1fe - 0x1ff	- Boot sign		  2 bytes
+
+Partition Table Entry:
+
+MS      LS
+[........]	- Boot Flag (0x80 bootable || 0x00 unbootable)
+[........]	- Start Head
+[..      	- Start Cylinder bit 8-9
+   ......]	- Start Sector
+[........]	- Start Cylinder bit 0-7
+[........]	- System ID (0x0 is empty entry)
+[........]	- End Head
+[..      	- End Cylinder bit 8-9
+   ......]	- End Sector
+[........]	- End Cylinder bit 0-7
+[........][........][........][........] - Relative Sector to start (LBA)
+[........][........][........][........] - Total Sectors in partition
+
+*Note- Relative starting sector and total sectors are little-endian:	
+	Reverse bit order of each byte
+	32bit value least sig bit has lower address (most left)
+
+	
+	Start	- 00 08 00 00
+	32bit	- 00000000 00001000 00000000 00000000
+		  MS_______________________________LS
+
+	Reverse	- 00 16 00 00
+	32bit	- 00000000 00010000 00000000 00000000
+		  LS_______________________________MS
+	
+	Decimal - 2048
+	Hex	- 0x800
+
