@@ -102,6 +102,16 @@ ibe_read_ptable:
 	xor	%ax, %ax
 	mov	$0x7dbe, %si
 	movb	(%si), %al
+	xor	%di, %di
+	cmp	$0x80, %al
+	je	__ibe_read_active
+	ret
+
+__ibe_read_active:
+	mov	$0xb800, %ax
+	mov	%ax, %es
+	mov	$__dbs_msg_active, %si
+	call	ibe_println
 	ret
 
 __dbs_xpos:
@@ -109,3 +119,6 @@ __dbs_xpos:
 
 __dbs_ypos:
 	.word 0
+
+__dbs_msg_active:
+	.asciz "Active"
