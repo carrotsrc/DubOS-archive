@@ -13,73 +13,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Initial Boot Environment
-# Terminal Inclusion
-
-# clear screen
-# assumes vbuf in %ES
-ibe_cls:
-	mov	$4000, %bx
-	xor	%si, %si
-	xor	%ax, %ax
-
-_ibe_clsl:
-	stosw
-	inc	%si
-	cmp	%bx, %si
-	jne	_ibe_clsl
-
-	xor	%di, %di
-	ret
-
-# print character array and add cr
-# assumes vbuf in %ES
-ibe_println:
-	call	ibe_print
-	add	$0x1, __dbs_ypos
-	mov	$0x0, %ax
-	mov	%ax, __dbs_xpos
-	ret
-
-# print character array
-# assumes vbuf in %ES
-ibe_print:
-	xor	%ax, %ax
-	xor	%cx, %cx
-
-_ibe_pr_l:
-	mov	(%si), %al
-	cmp	$0x0, %al
-	je	_ibe_pr_xt
-	call	_ibe_pr_u8
-	inc	%si
-	jmp 	_ibe_pr_l
-
-_ibe_pr_xt:
-	ret
-
-_ibe_pr_u8:
-	mov	$0x0f, %ah
-	mov	%ax, %cx
-
-	mov	__dbs_ypos, %ax
-	mov	$160, %dx
-	mul	%dx
-
-	mov	__dbs_xpos, %bx
-	shl	$1, %bx
-
-	mov	$0x0, %di
-	add	%ax, %di
-	add	%bx, %di
-
-	mov	%cx, %ax
-	stosw
-
-	add	$1, __dbs_xpos
-
-	ret
-
 # we need to relocate the boot code for chainloading
 ibe_reloc:
 	mov	$0x060, %ax
@@ -100,9 +33,10 @@ _ibe_reloc_l:
 
 ibe_read_ptable:
 	xor	%ax, %ax
-	mov	$0x7dbe, %si
+	xor	%bx, %bx
+	mov	$0x7dbe, %bx
+	mov	%bx, %si
 	movb	(%si), %al
-	xor	%di, %di
 	cmp	$0x80, %al
 	je	__ibe_read_active
 	ret
@@ -111,7 +45,7 @@ __ibe_read_active:
 	mov	$0xb800, %ax
 	mov	%ax, %es
 	mov	$__dbs_msg_active, %si
-	call	ibe_println
+	call	dbs_println
 	ret
 
 __dbs_xpos:

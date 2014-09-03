@@ -34,6 +34,7 @@ _preboot:
 __RELOCATE_MARKER:
 	jmp _post_relocate
 
+	.include "dbs_out.inc.s"		# dbs output - need this
 	.include "dbs_ibe.inc.s"		# dbs initial boot environment - need this
 	.include "dbs_diskop.inc.s"		# dbs disk operator
 _boot:
@@ -50,13 +51,13 @@ _post_relocate:
 	call	ibe_read_ptable
 	mov	$0xb800, %ax	# vbuf
 	mov	%ax, %es	# set the far ptr to vbuf
-	call	ibe_cls		# clear screen
+	call	dbs_cls		# clear screen
 
 	mov	$msg_title, %si
-	call	ibe_println
+	call	dbs_println
 
 	mov	$msg_title2, %si
-	call	ibe_println
+	call	dbs_println
 /*
 	call	dbs_lsec
 
@@ -65,7 +66,7 @@ _post_relocate:
 	mov	%ax, %es
 	mov	__flp_buf, %si	# should be loaded
 
-	call	ibe_println
+	call	dbs_println
 */
 	jmp	.
 

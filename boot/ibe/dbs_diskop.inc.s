@@ -80,7 +80,7 @@ _dbs_flp_print_msg:
 	movw	%bx, %si
 	movw	$0xb800, %ax
 	movw	%ax, %es
-	call	ibe_print
+	call	dbs_print
 	pop	%bp
 	ret
 
