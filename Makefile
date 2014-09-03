@@ -114,3 +114,11 @@ localinst:
 	sudo mount /dev/sda1 /boot
 	sudo cp sub.bin /boot
 	sudo umount /boot
+
+
+# Tools are here
+
+vbrw.o:
+	gcc -std=c99 -ggdb -c tools/vbrw/entry.c -o tools/vbrw/obj/vbrw.o
+vbrw: vbrw.o
+	gcc tools/vbrw/obj/vbrw.o -o tools/bin/vbrw
