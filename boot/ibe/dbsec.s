@@ -48,10 +48,11 @@ _boot:
 	call	ibe_reloc
 
 _post_relocate:
-	call	ibe_read_ptable
 	mov	$0xb800, %ax	# vbuf
 	mov	%ax, %es	# set the far ptr to vbuf
 	call	dbs_cls		# clear screen
+
+	call	ibe_load_partition
 
 	mov	$msg_title, %si
 	call	dbs_println
