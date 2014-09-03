@@ -31,28 +31,64 @@ _ibe_reloc_l:
 	xor	%di, %di
 	jmp	$0x0000, $0x0600 # far jump to new location
 
+# Load a partition
+ibe_load_partition:
+	push	%bp
+	mov	%sp, %bp
+	sub	$0x6, %sp	# enough variables for CHS
+	call	ibe_read_ptable
+	pop	%bp
+	pop	%bp
+	pop	%bp
+	pop	%bp
+	ret
+
+# Read the partition table to find
+# bootable partition
 ibe_read_ptable:
+	push	%bp
+	mov	%sp, %bp
+	xor	%cx, %cx
+	mov	$0x30, %cx	# partition number (ascii)
+
 	xor	%ax, %ax
 	xor	%bx, %bx
-	mov	$0x7dbe, %bx
+	mov	$0x7dae, %bx	# first entry - 16 bytes
+
+__ibe_read_pentry:
+	add	$0x10, %bx	# next entry
+	inc	%cx		# next internal id
+
+	cmp	$0x35, %cl		# if ths is true then we
+	je	__ibe_read_ptable_xt	# failed to find any
+
 	mov	%bx, %si
 	movb	(%si), %al
 	cmp	$0x80, %al
-	je	__ibe_read_active
+	jne	__ibe_read_pentry
+
+	xor	%bx, %bx
+	# found a bootable partition
+__ibe_chs_loop:
+	inc	%si		# Head
+	mov	(%si), %al
+	mov	%al, 0x6(%bp)
+
+	inc	%si		# Cylinder
+	mov	(%si), %al
+	mov	%al, 0x8(%bp)
+
+	inc	%si		# Sector
+	mov	(%si), %al
+	mov	%al, 0x4(%bp)
+
+__ibe_read_ptable_xt:
+	pop	%bp
 	ret
 
-__ibe_read_active:
-	mov	$0xb800, %ax
-	mov	%ax, %es
-	mov	$__dbs_msg_active, %si
-	call	dbs_println
-	ret
 
-__dbs_xpos:
-	.word 0
-
-__dbs_ypos:
-	.word 0
+__dbs_msg_inactive:
+	.asciz ": Inactive"
 
 __dbs_msg_active:
-	.asciz "Active"
+	.asciz ": Active"

@@ -43,6 +43,8 @@ dbs_println:
 # print character array
 # assumes vbuf in %ES
 dbs_print:
+	push	%ax
+	push	%cx
 	xor	%ax, %ax
 	xor	%cx, %cx
 
@@ -55,6 +57,8 @@ _dbs_pr_l:
 	jmp 	_dbs_pr_l
 
 _dbs_pr_xt:
+	pop	%cx
+	pop	%ax
 	ret
 
 _dbs_pr_u8:
@@ -79,3 +83,8 @@ _dbs_pr_u8:
 
 	ret
 
+__dbs_xpos:
+	.word 0
+
+__dbs_ypos:
+	.word 0
