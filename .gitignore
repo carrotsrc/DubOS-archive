@@ -3,3 +3,4 @@ bin/*.*
 sub.bin
 bochs/log/*
 bochs/boot/hdd.img
+bochs/tools/bin/*
