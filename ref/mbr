@@ -6,7 +6,7 @@ Classic layout
 0x000 - 0x1b3	- Bootstrap		436 bytes
 0x1b4 - 0x1bd	- Byte Disk ID		 10 bytes
 0x1be - 0x1cd	- Partition 1		 16 bytes
-0x1ce - 0x1dd	- Partition 2		 16 bytes		
+0x1ce - 0x1dd	- Partition 2		 16 bytes
 0x1de - 0x1ed	- Partition 3		 16 bytes
 0x1ee - 0x1fd	- Partition 4		 16 bytes
 0x1fe - 0x1ff	- Boot sign		  2 bytes
@@ -27,18 +27,15 @@ MS      LS
 [........][........][........][........] - Relative Sector to start (LBA)
 [........][........][........][........] - Total Sectors in partition
 
-*Note- Relative starting sector and total sectors are little-endian:	
-	Reverse bit order of each byte
-	32bit value least sig bit has lower address (most left)
+*Note- Relative starting sector and total sectors are stored in little-endian on x86
 
-	
-	Start	- 00 08 00 00
-	32bit	- 00000000 00001000 00000000 00000000
-		  MS_______________________________LS
-
-	Reverse	- 00 10 00 00
+	Little	- 00 08 00 00
 	32bit	- 00000000 00010000 00000000 00000000
 		  LS_______________________________MS
+
+	Big	- 00 00 08 00
+	32bit	- 00000000 00000000 00001000 00000000
+		  MS_______________________________LS
 	
 	Decimal - 2048
 	Hex	- 0x800
