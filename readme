@@ -7,7 +7,9 @@ Notes
 DubOS is an exploration into kernel development.
 It's long term aim is to become an environment for dedicated audio signal processing; whether it will ever reach that is another story! For now it's interesting just to venture into the world of hardware programming.
 
-Mainly tested on bochs, but early builds were tested straight on the metal. Includes bash scripts for compiling, installing and loading in bochs.
+Mainly tested on bochs,  with some testing straight on the metal. Includes bash scripts for compiling, installing and loading in bochs.
+
+Included a VBR writer tool for writing boot code to a partition.
 
 Current Task
 ------------
