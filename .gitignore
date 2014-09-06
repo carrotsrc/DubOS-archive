@@ -1,6 +1,7 @@
 obj/*.*
 bin/*.*
+*.o
 sub.bin
 bochs/log/*
 bochs/boot/hdd.img
-bochs/tools/bin/*
+tools/bin/*
