@@ -8,7 +8,7 @@ It's long term aim is to become an environment for dedicated audio signal proces
 Current
 -------
 
-MBR relocates itself to 0x0600, ready for chainloading to the boot sector of a partition.
+MBR relocates itself to 0x0600, chainloads the boot sector of the bootable partition and far jumps to the second stage boot code.
 
 Swapped everything over from floppy image to hard disk image; Hard disk is now partitioned. Built a tool for selecting a partition and writing bootstrap code to it's boot sector.
 
