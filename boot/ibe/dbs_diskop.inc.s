@@ -13,49 +13,38 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# worrying - not sure why this was needed
-#floppy_geo:
-#	.byte 36, 18, 15, 9, 0
-
 __flp_buf:
-	.word 0x7F00		# buffer address
+	.word 0x7C00		# buffer address
 
 __flp_emsg0:
 __flp_emsg1:
 	.asciz "Error reading from drive"
 
 dbs_lsec:
-	
-	
-	xor	%esi, %esi
-	
-	# leave mov for future ref - this doesn't seem
-	# to be needed which is worrying. Why was it
-	# here before?
-	#mov	$floppy_geo-1, %si	# load geos
-
-_dbs_g_l:
 	push	%bp
 	mov	%sp, %bp
-	movb	0x6(%bp), %dl
+	xor	%esi, %esi
+	xor	%cx, %cx
+
+dbs_rsdrive:
+	# first reset the drive
+	movb	0x4(%bp), %dl
 
 	xorw	%ax, %ax	# int13 00
 	int	$0x13		# reset drive
 
-
-	inc	%si
-	movb	$0x2, %cl
-	je	_dbs_geo_flp_err1
+	movb	0x6(%bp), %ch	# cylinder
+	movb	0x8(%bp), %dh	# head
+	movb	0xa(%bp), %cl	# Sector
 
 	xor	%bx, %bx
 	movw	%bx, %es
 	movw	__flp_buf, %bx	# use the flp buffer
+
 	movw	$0x0201, %ax	# ah = 02h / al = 1 sector to read
-	movb	$0x00, %ch	# cylinder 0
-	movb	$0x00, %dh	# head 0
 	int	$0x13
 
-	jc	_dbs_g_l	# jump on cf error
+	jc	dbs_rsdrive	# jump on cf error
 
 	pop	%bp
 	ret
