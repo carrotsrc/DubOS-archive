@@ -45,7 +45,10 @@ _boot:
 	mov	%ax, %ss	# move 0 into stack segment
 	push	%dx		# push the boot drive
 	mov	%ax, %ds	# mov 0 into data segment
-	call	ibe_reloc
+
+	# don't need to call the relocator routine
+	# since we're not coming back back here
+	jmp	ibe_reloc
 
 _post_relocate:
 	mov	$0xb800, %ax	# vbuf
@@ -53,23 +56,7 @@ _post_relocate:
 	call	dbs_cls		# clear screen
 
 	call	ibe_load_partition
-
-	mov	$msg_title, %si
-	call	dbs_println
-
-	mov	$msg_title2, %si
-	call	dbs_println
-/*
-	call	dbs_lsec
-
-	add	$0x2, %sp
-	mov	$0xb800, %ax	# vbuf
-	mov	%ax, %es
-	mov	__flp_buf, %si	# should be loaded
-
-	call	dbs_println
-*/
-	jmp	.
+	jmp	$0x0000, $0x7c00
 
 msg_title:
 	.asciz	"DubOS"

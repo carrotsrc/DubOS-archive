@@ -37,9 +37,12 @@ ibe_load_partition:
 	mov	%sp, %bp
 	sub	$0x6, %sp	# enough variables for CHS
 	call	ibe_read_ptable
-	pop	%bp
-	pop	%bp
-	pop	%bp
+	push	0x4(%bp)	# push the calling disk
+	cmp	$0x1, -0x2(%bp)
+	jl	ibe_lp_xt
+	call	dbs_lsec	# load the boot sector
+ibe_lp_xt:
+	add	$0x8, %sp # clear out variables
 	pop	%bp
 	ret
 

@@ -33,7 +33,10 @@ dbeinst:
 	@./scripts/dbsloop
 	@./scripts/ebedd
 	@./scripts/dbsuloop
-	
+
+vbe:
+	$(as) boot/ibe/dbs_vbe.s -Iboot/ibe -o $(objdir)/vbedbs.o
+	$(ld) --oformat binary --Ttext 0x7F00 -o $(binout)/dbvbe.bin $(objdir)/vbedbs.o 
 
 boot.o:
 	$(as) boot/boot.s -o $(objdir)/boot.o

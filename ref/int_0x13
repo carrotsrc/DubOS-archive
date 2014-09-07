@@ -6,7 +6,8 @@ dl: floppy (0x0-0x3) hard (0x80 - 0x81)
 
 ch: cylinder
 dh: head
-al: sectors
+cl: sector
+al: sectors to read
 
 bx: buffer address (es:bs)
 
