@@ -4,15 +4,12 @@
 # initial boot environment
 boot="bochs/boot"
 img="hdd.img"
-
-if [ "$1" != "" ]; then
-	img="$1"
+offset="0"
+if [ "$1" == "-o" ]; then
+	if [ "$2" != "" ]; then
+		offset="$2"
+	fi
 fi
-
-if [ "$2" != "" ]; then
-	boot="$2"
-fi
-
 echo "Setting up loop device on /dev/loop0"
-echo "from $boot/$img"
-sudo losetup /dev/loop0 $boot/$img
+echo "from $boot/$img +$offset bytes"
+sudo losetup /dev/loop0 $boot/$img -o$offset
