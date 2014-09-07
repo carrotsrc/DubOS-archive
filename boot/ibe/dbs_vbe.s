@@ -26,13 +26,13 @@ nop
 # This is for a FAT16 partition
 .ascii	"MSDOS5.0"
 .word	512		# Bytes/Sector
-.byte	1		# Sectors/Cluster
+.byte	4		# Sectors/Cluster
 .word	1		# Number of reserved sectors
 .byte	2		# number of FAT copies
 .word	512		# number of root dir entries
-.word	61340		# total number of sectors
+.word	63472		# total number of sectors
 .byte	0xf8		# media descriptor type
-.word	9		# sectors/FAT
+.word	64		# sectors/FAT
 .word	63		# sectors/track
 .word	16		# number of heads
 .long	0		# number of hidden sectors
@@ -41,7 +41,7 @@ nop
 .byte	0x80		# Physical driver number
 .byte	0x00		# Reserved
 .byte	0x29		# Extended boot signature
-.long	0xD0BD0B	# Volume serial
+.long	0xD0BD0BEE	# Volume serial
 .ascii	"DubOS01 "	# Volume label
 .ascii	"FAT16 "	# File system type
 
