@@ -19,9 +19,11 @@
 .text
 .global _start
 .code16
+
 _start:
 jmp _onload
 nop
+
 ## BPB ##
 # This is for a FAT16 partition
 .ascii	"MSDOS5.0"
@@ -45,8 +47,19 @@ nop
 .ascii	"DubOS01 "	# Volume label
 .ascii	"FAT16 "	# File system type
 
+	.include "dbs_out.inc.s"	# output
+
 _onload:
+	mov	$0xb800, %ax	# vbuf
+	mov	%ax, %es	# set the far ptr to vbuf
+	mov	$chain_msg, %si
+	xor	%di, %di
+	call	dbs_println
 	jmp	.
+
+chain_msg:
+	.asciz "Chainloaded"
+
 
 .org	.+(510-.), 0x0
 .word	0xAA55
