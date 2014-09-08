@@ -1,0 +1,2 @@
+#!/bin/bash
+./tools/bin/vbrw -b bin/dbvbe.bin -i bochs/boot/hdd.img
