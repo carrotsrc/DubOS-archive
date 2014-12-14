@@ -1,8 +1,6 @@
 # DubOS
--------
 
 ### Notes
----------
 
 DubOS is an exploration into kernel development.
 It's long term aim is to become an environment for dedicated audio signal processing; whether it will ever reach that is another story! For now it's interesting just to venture into the world of hardware programming.
@@ -10,14 +8,12 @@ It's long term aim is to become an environment for dedicated audio signal proces
 Mainly tested on bochs, but early builds were tested straight on the metal. Includes bash scripts for compiling, installing and loading in bochs.
 
 ### Current Task
-------------
 
 MBR relocates itself to 0x0600, and loads up the second sector of the disk which has the EBE- this is close to being in a state for chainloading!
 
 Swapped everything over from floppy image to hard disk image. Next need to partition the hard disk image properly.
 
 ### Points of Interest
-------------------
 
 * Started work on boot loader- currently loads second sector of floppy disk  and prints messages to text buffer
   
